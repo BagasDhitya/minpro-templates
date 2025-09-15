@@ -3,29 +3,37 @@ import { TodoRouter } from './routers/todo.router'
 import cors from 'cors'
 
 class App {
-    public app: Application
+    private app: Application
+    private port: number
 
-    constructor() {
+    constructor(port: number) {
+        this.port = port
         this.app = express()
+
         this.initMiddlewares()
         this.initRoutes()
     }
 
     private initMiddlewares() {
         this.app.use(cors({
-            origin: process.env.FRONTEND_URL || '*'  // jangan fix ke localhost
+            origin: 'http://localhost:3000'
         }))
         this.app.use(express.json())
     }
 
     private initRoutes() {
         this.app.use('/api/todos', TodoRouter)
-        this.app.get('/', (req: Request, res: Response) => {
+        this.app.use('/', (req: Request, res: Response) => {
             res.status(200).send({ message: 'hello world' })
+        })
+    }
+
+    public listen() {
+        this.app.listen(this.port, () => {
+            console.log(`Server running at http://localhost:${this.port}`)
         })
     }
 }
 
-// ✅ Export app untuk Vercel
-const server = new App()
-export default server.app
+const server = new App(8000)
+server.listen()
