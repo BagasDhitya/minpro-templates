@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "projects": {
+    "web": {
+      "rootDirectory": "apps/web"
+    },
+    "api": {
+      "rootDirectory": "apps/api"
+    }
+  },
+  "builds": [
+    {
+      "src": "apps/api/dist/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "apps/api/dist/app.js"
+    }
+  ]
+}
