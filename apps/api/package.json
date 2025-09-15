@@ -5,6 +5,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev src/app.ts",
+    "prisma:migrate": "npx prisma migrate dev",
+    "postinstall": "npx prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
